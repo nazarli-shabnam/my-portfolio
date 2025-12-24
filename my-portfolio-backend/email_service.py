@@ -17,26 +17,36 @@ def send_contact_notification(
 ) -> tuple[bool, Optional[str]]:
     """
     Send an email notification when someone submits the contact form.
-    
+
     Args:
         sender_name: Name of the person who submitted the form
         sender_email: Email of the person who submitted the form
         reason: Reason for contact (collab, question, other)
         message: The message content
         recipient_email: Email address to send notification to (defaults to env var)
-    
+
     Returns:
         Tuple of (success: bool, error_message: Optional[str])
     """
     # Get configuration from environment variables
     sendgrid_api_key = os.getenv("SENDGRID_API_KEY")
-    notification_email = recipient_email or os.getenv("NOTIFICATION_EMAIL", "shabnamnezerli@gmail.com")
-    
+    notification_email = recipient_email or os.getenv(
+        "NOTIFICATION_EMAIL", "shabnamnezerli@gmail.com")
+
+    print(f"🔍 Checking SendGrid configuration...")
+    print(
+        f"   SENDGRID_API_KEY: {'✅ Set' if sendgrid_api_key else '❌ Not set'}")
+    print(f"   NOTIFICATION_EMAIL: {notification_email}")
+    print(
+        f"   SENDGRID_FROM_EMAIL: {os.getenv('SENDGRID_FROM_EMAIL', 'Not set (using default)')}")
+
     # Check if SendGrid is configured
     if not sendgrid_api_key:
         print("⚠️  SENDGRID_API_KEY not set. Email notification skipped.")
+        print(
+            "💡 To enable emails, add SENDGRID_API_KEY to your Render environment variables.")
         return False, "Email service not configured"
-    
+
     try:
         # Map reason to readable text
         reason_map = {
@@ -45,10 +55,10 @@ def send_contact_notification(
             "other": "Other",
         }
         reason_text = reason_map.get(reason, reason)
-        
+
         # Create email content
         subject = f"New Contact Form Submission from {sender_name}"
-        
+
         html_content = f"""
         <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
@@ -74,7 +84,7 @@ def send_contact_notification(
         </body>
         </html>
         """
-        
+
         text_content = f"""
 New Contact Form Submission
 
@@ -89,33 +99,34 @@ Message:
 This is an automated notification from your portfolio contact form.
 Reply directly to: {sender_email}
         """
-        
+
         # Create Mail object
         mail = Mail(
-            from_email=os.getenv("SENDGRID_FROM_EMAIL", "noreply@portfolio.com"),
+            from_email=os.getenv("SENDGRID_FROM_EMAIL",
+                                 "noreply@portfolio.com"),
             to_emails=notification_email,
             subject=subject,
             html_content=html_content,
             plain_text_content=text_content,
         )
-        
+
         # Add reply-to header so you can reply directly to the sender
         mail.reply_to = sender_email
-        
+
         # Send email
         sg = SendGridAPIClient(sendgrid_api_key)
         response = sg.send(mail)
-        
+
         if response.status_code in [200, 201, 202]:
-            print(f"✅ Email notification sent successfully to {notification_email}")
+            print(
+                f"✅ Email notification sent successfully to {notification_email}")
             return True, None
         else:
             error_msg = f"SendGrid returned status {response.status_code}"
             print(f"❌ Failed to send email: {error_msg}")
             return False, error_msg
-            
+
     except Exception as e:
         error_msg = f"Error sending email: {str(e)}"
         print(f"❌ {error_msg}")
         return False, error_msg
-
