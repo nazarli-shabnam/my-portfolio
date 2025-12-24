@@ -11,7 +11,9 @@ app = FastAPI(title="Shabnam Portfolio API")
 # Format: "http://localhost:5500,https://shabnamnazarli.ufazien.com,https://your-frontend-domain.com"
 allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "")
 if allowed_origins_env:
-    origins = [origin.strip() for origin in allowed_origins_env.split(",")]
+    origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+    # Log for debugging (remove in production or use proper logging)
+    print(f"✅ CORS Origins from environment: {origins}")
 else:
     # Default origins for local development
     origins = [
@@ -20,6 +22,7 @@ else:
         "http://127.0.0.1:5500",
         "https://shabnamnazarli.ufazien.com",
     ]
+    print(f"⚠️  Using default CORS origins: {origins}")
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +30,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
