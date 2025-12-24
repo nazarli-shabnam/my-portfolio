@@ -141,127 +141,156 @@ if (yearSpan) {
 
 // ========== Contact Form ==========
 const form = document.getElementById("contactForm");
-const submitButton = form.querySelector('button[type="submit"]');
-const formNote = form.querySelector(".form-note");
 
-// API URL configuration - works for both local and production
-// In production, set this to your Render backend URL
-const API_BASE_URL =
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1"
-    ? "http://localhost:8000" // Local development
-    : "https://my-portfolio-avxr.onrender.com";
+if (!form) {
+  console.error("Contact form not found!");
+} else {
+  const submitButton = form.querySelector('button[type="submit"]');
+  const formNote = form.querySelector(".form-note");
 
-// Helper function to show form feedback
-function showFormFeedback(message, isError = false) {
-  if (!formNote) return;
+  // API URL configuration - works for both local and production
+  // In production, set this to your Render backend URL
+  const API_BASE_URL =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://localhost:8000" // Local development
+      : "https://my-portfolio-avxr.onrender.com";
 
-  formNote.textContent = message;
-  formNote.style.color = isError ? "var(--danger)" : "var(--accent-strong)";
-  formNote.style.display = "block";
+  // Helper function to show form feedback
+  function showFormFeedback(message, isError = false) {
+    if (!formNote) return;
 
-  // Auto-hide success messages after 5 seconds
-  if (!isError) {
-    setTimeout(() => {
-      formNote.style.display = "none";
-    }, 5000);
+    formNote.textContent = message;
+    formNote.style.color = isError ? "var(--danger)" : "var(--accent-strong)";
+    formNote.style.display = "block";
+
+    // Auto-hide success messages after 5 seconds
+    if (!isError) {
+      setTimeout(() => {
+        formNote.style.display = "none";
+      }, 5000);
+    }
   }
-}
 
-// Helper function to set form loading state
-function setFormLoading(isLoading) {
-  submitButton.disabled = isLoading;
-  submitButton.textContent = isLoading ? "Sending..." : "Send Message";
-  submitButton.style.opacity = isLoading ? "0.7" : "1";
-  submitButton.style.cursor = isLoading ? "not-allowed" : "pointer";
+  // Helper function to set form loading state
+  function setFormLoading(isLoading) {
+    submitButton.disabled = isLoading;
+    submitButton.textContent = isLoading ? "Sending..." : "Send Message";
+    submitButton.style.opacity = isLoading ? "0.7" : "1";
+    submitButton.style.cursor = isLoading ? "not-allowed" : "pointer";
 
-  // Disable all form fields while submitting
-  const formFields = form.querySelectorAll("input, select, textarea");
-  formFields.forEach((field) => {
-    field.disabled = isLoading;
+    // Disable all form fields while submitting
+    const formFields = form.querySelectorAll("input, select, textarea");
+    formFields.forEach((field) => {
+      field.disabled = isLoading;
+    });
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Hide previous feedback
+    if (formNote) {
+      formNote.style.display = "none";
+    }
+
+    // Set loading state
+    setFormLoading(true);
+
+    try {
+      const formData = new FormData(form);
+
+      // Get form values with null safety
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const reason = formData.get("reason");
+      const message = formData.get("message");
+
+      // Debug logging (remove in production)
+      console.log("Form values:", { name, email, reason, message });
+
+      const payload = {
+        name: name ? name.trim() : "",
+        email: email ? email.trim() : "",
+        reason: reason || "other",
+        message: message ? message.trim() : "",
+      };
+
+      console.log("Payload after trim:", payload);
+
+      // Basic client-side validation with specific error messages
+      const missingFields = [];
+      if (!payload.name || payload.name.length === 0) {
+        missingFields.push("name");
+      }
+      if (!payload.email || payload.email.length === 0) {
+        missingFields.push("email");
+      }
+      if (!payload.message || payload.message.length === 0) {
+        missingFields.push("message");
+      }
+
+      if (missingFields.length > 0) {
+        throw new Error(`Please fill in: ${missingFields.join(", ")}`);
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(payload.email)) {
+        throw new Error("Please enter a valid email address.");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      let data = {};
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        // If not JSON, get text response
+        const text = await response.text();
+        throw new Error(text || "Server returned an unexpected response.");
+      }
+
+      if (response.ok) {
+        // Success
+        showFormFeedback(
+          data.message ||
+            "Thanks! Your message was sent ✨ I'll get back to you soon.",
+          false
+        );
+        form.reset();
+      } else {
+        // Server returned an error
+        throw new Error(
+          data.detail ||
+            data.message ||
+            "Something went wrong. Please try again."
+        );
+      }
+    } catch (error) {
+      // Network error or validation error
+      let errorMessage = "Oops! Something went wrong. ";
+
+      if (
+        error.message.includes("Failed to fetch") ||
+        error.message.includes("NetworkError")
+      ) {
+        errorMessage += "Please check your connection and try again.";
+      } else {
+        errorMessage += error.message;
+      }
+
+      showFormFeedback(errorMessage, true);
+    } finally {
+      // Reset loading state
+      setFormLoading(false);
+    }
   });
 }
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  // Hide previous feedback
-  if (formNote) {
-    formNote.style.display = "none";
-  }
-
-  // Set loading state
-  setFormLoading(true);
-
-  try {
-    const formData = new FormData(form);
-
-    // Get form values with null safety
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const reason = formData.get("reason");
-    const message = formData.get("message");
-
-    const payload = {
-      name: name ? name.trim() : "",
-      email: email ? email.trim() : "",
-      reason: reason || "other",
-      message: message ? message.trim() : "",
-    };
-
-    // Basic client-side validation
-    if (!payload.name || !payload.email || !payload.message) {
-      throw new Error("Please fill in all required fields.");
-    }
-
-    const response = await fetch(`${API_BASE_URL}/contact`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    // Check if response is JSON
-    const contentType = response.headers.get("content-type");
-    let data = {};
-
-    if (contentType && contentType.includes("application/json")) {
-      data = await response.json();
-    } else {
-      // If not JSON, get text response
-      const text = await response.text();
-      throw new Error(text || "Server returned an unexpected response.");
-    }
-
-    if (response.ok) {
-      // Success
-      showFormFeedback(
-        data.message ||
-          "Thanks! Your message was sent ✨ I'll get back to you soon.",
-        false
-      );
-      form.reset();
-    } else {
-      // Server returned an error
-      throw new Error(
-        data.detail || data.message || "Something went wrong. Please try again."
-      );
-    }
-  } catch (error) {
-    // Network error or validation error
-    let errorMessage = "Oops! Something went wrong. ";
-
-    if (
-      error.message.includes("Failed to fetch") ||
-      error.message.includes("NetworkError")
-    ) {
-      errorMessage += "Please check your connection and try again.";
-    } else {
-      errorMessage += error.message;
-    }
-
-    showFormFeedback(errorMessage, true);
-  } finally {
-    // Reset loading state
-    setFormLoading(false);
-  }
-});
