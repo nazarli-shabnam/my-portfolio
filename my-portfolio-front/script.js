@@ -198,15 +198,25 @@ if (!form) {
     setFormLoading(true);
 
     try {
-      const formData = new FormData(form);
+      // Get form values directly from form elements
+      const nameInput = form.querySelector('input[name="name"]');
+      const emailInput = form.querySelector('input[name="email"]');
+      const reasonSelect = form.querySelector('select[name="reason"]');
+      const messageTextarea = form.querySelector('textarea[name="message"]');
 
-      // Get form values with null safety
-      const name = formData.get("name");
-      const email = formData.get("email");
-      const reason = formData.get("reason");
-      const message = formData.get("message");
+      // Get values with null safety
+      const name = nameInput ? nameInput.value : "";
+      const email = emailInput ? emailInput.value : "";
+      const reason = reasonSelect ? reasonSelect.value : "other";
+      const message = messageTextarea ? messageTextarea.value : "";
 
       // Debug logging (remove in production)
+      console.log("Form elements found:", {
+        nameInput: !!nameInput,
+        emailInput: !!emailInput,
+        reasonSelect: !!reasonSelect,
+        messageTextarea: !!messageTextarea,
+      });
       console.log("Form values:", { name, email, reason, message });
 
       const payload = {
