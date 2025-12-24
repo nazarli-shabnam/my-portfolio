@@ -466,125 +466,189 @@
           <div class="projects-grid">
             <article class="project-card reveal" data-category="backend api">
               <div class="project-header">
-                <h3>Churn Prediction Service</h3>
-                <span class="project-tag">Backend • ML</span>
+                <h3>Order Processing System</h3>
+                <span class="project-tag">Backend • Microservices</span>
               </div>
               <p>
-                A backend service exposing an API for customer churn prediction
-                using a trained ML model. Includes endpoints for predictions,
-                monitoring, and simple reports.
+                An event-driven microservices architecture for processing
+                e-commerce orders. Implements distributed system patterns with
+                Redis pub/sub, message queues, and asynchronous processing.
+                Features idempotency guarantees, transaction safety, and
+                horizontal scalability for high-throughput order management.
               </p>
               <ul class="project-tech">
+                <li>Python</li>
                 <li>FastAPI</li>
-                <li>Scikit-learn</li>
-                <li>PostgreSQL</li>
+                <li>Redis</li>
                 <li>Docker</li>
+                <li>Docker Compose</li>
+                <li>Microservices</li>
               </ul>
               <div class="project-links">
-                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
-                <span>•</span>
-                <!-- <a href="#" target="_blank" rel="noreferrer">Demo (if hosted)</a> -->
+                <a
+                  href="https://github.com/nazarli-shabnam/order-processing"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View Code</a
+                >
               </div>
             </article>
 
             <article class="project-card reveal" data-category="backend api">
               <div class="project-header">
-                <h3>Task Manager API</h3>
-                <span class="project-tag">Backend</span>
+                <h3>Subscription Tracker</h3>
+                <span class="project-tag">Backend • API</span>
               </div>
               <p>
-                A robust REST API for managing tasks with authentication,
-                filtering, and pagination. Designed with clean architecture and
-                testing in mind.
+                A comprehensive backend service for tracking and managing
+                subscriptions with advanced features for monitoring renewal
+                dates, costs, usage analytics, and automated notifications.
+                Built with clean architecture, domain-driven design, and robust
+                data validation using Pydantic models.
               </p>
               <ul class="project-tech">
-                <li>NestJS</li>
-                <li>TypeScript</li>
+                <li>Python</li>
+                <li>FastAPI</li>
                 <li>PostgreSQL</li>
-                <li>JWT Auth</li>
+                <li>SQLAlchemy</li>
+                <li>Alembic</li>
+                <li>Docker</li>
               </ul>
               <div class="project-links">
-                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+                <a
+                  href="https://github.com/nazarli-shabnam/subscription-tracker"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View Code</a
+                >
               </div>
             </article>
 
             <article class="project-card reveal" data-category="backend">
               <div class="project-header">
-                <h3>Scheduling & Availability Service</h3>
-                <span class="project-tag">Backend • Scheduling</span>
+                <h3>NoDaNorm MedCare</h3>
+                <span class="project-tag">Backend • Healthcare</span>
               </div>
               <p>
-                API that manages working hours, closures, and appointment slots
-                for a facility. Includes validation to prevent overlapping
-                appointments and warn about conflicts.
+                A production-grade medical application backend built with
+                NestJS, featuring comprehensive patient management, appointment
+                scheduling, medical workflows, and audit logging. Implements
+                custom decorators, guards, interceptors, role-based access
+                control, DTO validation, and Swagger documentation. Includes
+                GitLab CI/CD pipelines, Prisma migrations, and comprehensive
+                testing suite.
               </p>
               <ul class="project-tech">
                 <li>NestJS</li>
-                <li>Prisma</li>
+                <li>TypeScript</li>
+                <li>Prisma ORM</li>
                 <li>PostgreSQL</li>
+                <li>JWT</li>
+                <li>GitLab CI/CD</li>
+                <li>Swagger</li>
+                <li>Docker</li>
               </ul>
               <div class="project-links">
-                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+                <a
+                  href="https://github.com/nazarli-shabnam/NoDaNorm-MedCare"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View Code</a
+                >
               </div>
             </article>
 
-            <article class="project-card reveal" data-category="ml">
+            <article class="project-card reveal" data-category="ml backend">
               <div class="project-header">
-                <h3>Network Traffic Classifier</h3>
-                <span class="project-tag">ML</span>
+                <h3>Medical Chatbot</h3>
+                <span class="project-tag">AI • Healthcare</span>
               </div>
               <p>
-                A classification project using a network datasets to distinguish
-                between normal and malicious traffic, exploring different ML
-                models and metrics.
+                An advanced AI-powered medical chatbot leveraging Google Gemini
+                for intelligent health-related inquiries. Features context-aware
+                responses, medical information retrieval, and safe healthcare
+                guidance. Built with RAG (Retrieval-Augmented Generation)
+                patterns, vector embeddings, and comprehensive prompt
+                engineering for accurate medical assistance.
               </p>
               <ul class="project-tech">
                 <li>Python</li>
-                <li>Pandas</li>
-                <li>Scikit-learn</li>
+                <li>FastAPI</li>
+                <li>Google Gemini</li>
+                <li>LangChain</li>
+                <li>RAG</li>
+                <li>Vector DB</li>
+                <li>NLP</li>
               </ul>
               <div class="project-links">
-                <!-- <a href="#" target="_blank" rel="noreferrer">Notebook</a> -->
+                <a
+                  href="https://github.com/nazarli-shabnam/medical-chatbot"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View Code</a
+                >
               </div>
             </article>
 
             <article class="project-card reveal" data-category="other">
               <div class="project-header">
-                <h3>Hadith Browser App</h3>
-                <span class="project-tag">Frontend • Personal</span>
+                <h3>ReadAble</h3>
+                <span class="project-tag">Mobile • Accessibility</span>
               </div>
               <p>
-                A web app for browsing and filtering Hadith collections with
-                bookmarking and dark mode, focused on a clean reading
-                experience.
+                A mobile assistive reading app that uses on-device OCR,
+                AI-powered summarization, and text-to-speech to make printed
+                text easier to read for people with dyslexia and reading
+                difficulties. Features focus mode, customizable accessibility
+                controls, offline-first architecture, and real-time text
+                processing with TensorFlow Lite for on-device ML inference.
               </p>
               <ul class="project-tech">
-                <li>React</li>
+                <li>React Native</li>
+                <li>Expo</li>
                 <li>TypeScript</li>
-                <li>Tailwind CSS</li>
+                <li>TensorFlow Lite</li>
+                <li>OCR</li>
+                <li>TTS</li>
               </ul>
               <div class="project-links">
-                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+                <a
+                  href="https://github.com/nazarli-shabnam/ReadAble"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View Code</a
+                >
               </div>
             </article>
 
-            <article class="project-card reveal" data-category="other">
+            <article class="project-card reveal" data-category="backend api">
               <div class="project-header">
-                <h3>Portfolio Playground</h3>
-                <span class="project-tag">This Site</span>
+                <h3>The9Books</h3>
+                <span class="project-tag">Backend • API</span>
               </div>
               <p>
-                A hand-crafted portfolio template focusing on clarity,
-                structure, and code quality. Built with vanilla HTML, CSS, and
-                JavaScript.
+                A comprehensive backend API system for managing and organizing
+                book collections with advanced search, filtering, and
+                recommendation features. Implements clean architecture,
+                domain-driven design, and efficient database queries. Features
+                include book cataloging, user management, rating systems, and
+                scalable data models for large collections.
               </p>
               <ul class="project-tech">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
+                <li>Python</li>
+                <li>FastAPI</li>
+                <li>PostgreSQL</li>
+                <li>SQLAlchemy</li>
+                <li>Alembic</li>
+                <li>Docker</li>
               </ul>
               <div class="project-links">
-                <a href="#" target="_blank" rel="noreferrer">Current Page</a>
+                <a
+                  href="https://github.com/nazarli-shabnam/The9Books"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View Code</a
+                >
               </div>
             </article>
           </div>
