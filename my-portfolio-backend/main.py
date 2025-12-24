@@ -37,6 +37,21 @@ class ContactMessage(BaseModel):
     message: str = Field(..., min_length=1, max_length=2000)
 
 
+@app.get("/")
+def root():
+    return {
+        "service": "Shabnam Portfolio API",
+        "status": "running",
+        "version": "1.0.0",
+        "endpoints": {
+            "health": "/health",
+            "contact": "/contact (POST)",
+            "docs": "/docs",
+            "openapi": "/openapi.json"
+        }
+    }
+
+
 @app.get("/health")
 def health():
     return {"status": "ok", "service": "portfolio-api"}

@@ -149,7 +149,7 @@ const formNote = form.querySelector(".form-note");
 const API_BASE_URL = 
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://localhost:8000"  // Local development
-    : "https://your-backend-app.onrender.com";  // Update this with your Render URL
+    : "https://my-portfolio-avxr.onrender.com";  // Update this with your Render URL
 
 // Helper function to show form feedback
 function showFormFeedback(message, isError = false) {
