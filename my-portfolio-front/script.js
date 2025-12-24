@@ -146,19 +146,20 @@ const formNote = form.querySelector(".form-note");
 
 // API URL configuration - works for both local and production
 // In production, set this to your Render backend URL
-const API_BASE_URL = 
-  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    ? "http://localhost:8000"  // Local development
-    : "https://my-portfolio-avxr.onrender.com";  // Update this with your Render URL
+const API_BASE_URL =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8000" // Local development
+    : "https://my-portfolio-avxr.onrender.com";
 
 // Helper function to show form feedback
 function showFormFeedback(message, isError = false) {
   if (!formNote) return;
-  
+
   formNote.textContent = message;
   formNote.style.color = isError ? "var(--danger)" : "var(--accent-strong)";
   formNote.style.display = "block";
-  
+
   // Auto-hide success messages after 5 seconds
   if (!isError) {
     setTimeout(() => {
@@ -173,7 +174,7 @@ function setFormLoading(isLoading) {
   submitButton.textContent = isLoading ? "Sending..." : "Send Message";
   submitButton.style.opacity = isLoading ? "0.7" : "1";
   submitButton.style.cursor = isLoading ? "not-allowed" : "pointer";
-  
+
   // Disable all form fields while submitting
   const formFields = form.querySelectorAll("input, select, textarea");
   formFields.forEach((field) => {
@@ -194,11 +195,18 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const formData = new FormData(form);
+
+    // Get form values with null safety
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const reason = formData.get("reason");
+    const message = formData.get("message");
+
     const payload = {
-      name: formData.get("name").trim(),
-      email: formData.get("email").trim(),
-      reason: formData.get("reason"),
-      message: formData.get("message").trim(),
+      name: name ? name.trim() : "",
+      email: email ? email.trim() : "",
+      reason: reason || "other",
+      message: message ? message.trim() : "",
     };
 
     // Basic client-side validation
@@ -212,12 +220,23 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(payload),
     });
 
-    const data = await response.json();
+    // Check if response is JSON
+    const contentType = response.headers.get("content-type");
+    let data = {};
+
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      // If not JSON, get text response
+      const text = await response.text();
+      throw new Error(text || "Server returned an unexpected response.");
+    }
 
     if (response.ok) {
       // Success
       showFormFeedback(
-        data.message || "Thanks! Your message was sent ✨ I'll get back to you soon.",
+        data.message ||
+          "Thanks! Your message was sent ✨ I'll get back to you soon.",
         false
       );
       form.reset();
@@ -230,17 +249,19 @@ form.addEventListener("submit", async (e) => {
   } catch (error) {
     // Network error or validation error
     let errorMessage = "Oops! Something went wrong. ";
-    
-    if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+
+    if (
+      error.message.includes("Failed to fetch") ||
+      error.message.includes("NetworkError")
+    ) {
       errorMessage += "Please check your connection and try again.";
     } else {
       errorMessage += error.message;
     }
-    
+
     showFormFeedback(errorMessage, true);
   } finally {
     // Reset loading state
     setFormLoading(false);
   }
 });
-
