@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shabnam – Backend Developer & AI Enthusiast</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portfolio of Shabnam – Backend Developer & AI Enthusiast."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <!-- ================= HEADER ================= -->
+      <header class="header">
+        <div class="logo">
+          <span class="logo-mark">{ }</span>
+          <span class="logo-text">Shabnam.dev</span>
+        </div>
+
+        <nav class="nav">
+          <button
+            class="nav-toggle"
+            id="navToggle"
+            aria-label="Toggle navigation"
+          >
+            <span></span><span></span><span></span>
+          </button>
+          <ul class="nav-links" id="navLinks">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#timeline">Journey</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </header>
+
+      <!-- ================= HERO ================= -->
+      <main>
+        <section class="hero" id="hero">
+          <div class="hero-content reveal">
+            <p class="eyebrow">Backend Developer • AI Enthusiast</p>
+            <h1>Hi, I’m <span class="accent">Shabnam</span>.</h1>
+            <p class="hero-subtitle">
+              I build <span class="underline">clean backend systems</span> and
+              <span class="accent">love automating everything</span>.
+            </p>
+
+            <p class="hero-typing">
+              <span class="hero-typing-label">Currently:</span>
+              <span id="typedText"></span>
+              <span class="caret">|</span>
+            </p>
+
+            <div class="hero-actions">
+              <a href="#projects" class="btn primary">View Projects</a>
+              <a href="#contact" class="btn ghost">Let’s Collaborate</a>
+            </div>
+
+            <div class="hero-meta">
+              <div>
+                <span class="meta-label">Focus</span>
+                <span class="meta-value">Backend • APIs • Microservices</span>
+              </div>
+              <div>
+                <span class="meta-label">Tech</span>
+                <span class="meta-value">Python, TypeScript, Docker, SQL</span>
+              </div>
+              <div>
+                <span class="meta-label">Location</span>
+                <span class="meta-value">Based in Azerbaijan</span>
+              </div>
+            </div>
+
+            <div class="hero-social">
+              <a
+                href="https://github.com/nazarli-shabnam"
+                target="_blank"
+                rel="noreferrer"
+                >GitHub</a
+              >
+              <span>•</span>
+              <a
+                href="https://www.linkedin.com/in/shabnamnazarli/"
+                target="_blank"
+                rel="noreferrer"
+                >LinkedIn</a
+              >
+              <span>•</span>
+              <a href="mailto:shabnamnezerli@gmail.com">Email</a>
+            </div>
+          </div>
+
+          <div class="hero-card reveal">
+            <div class="hero-card-inner">
+              <p class="hero-card-title">Tech Snapshot</p>
+              <ul class="hero-card-list">
+                <li><span>⚙️</span> RESTful & async APIs</li>
+                <li><span>🧪</span> Testing & code quality</li>
+                <li><span>📦</span> Dockerized microservices</li>
+                <li><span>☁️</span> Cloud-friendly architecture</li>
+                <li><span>🤖</span> Curious about ML & AI tools</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ABOUT ================= -->
+        <section class="section" id="about">
+          <div class="section-header reveal">
+            <h2>About Me</h2>
+            <p>Who I am and how I think about building software.</p>
+          </div>
+          <div class="about-grid">
+            <div class="card reveal">
+              <h3>Developer with a systems mindset</h3>
+              <p>
+                I’m a Computer Science student and backend developer who enjoys
+                turning fuzzy ideas into reliable services. I care a lot about
+                clean architecture, developer experience, and writing code that
+                future-me won’t hate.
+              </p>
+              <p>
+                My comfort zone is <strong>Python</strong> and
+                <strong>TypeScript</strong>, especially in web backends, APIs,
+                and microservice-style systems. I’m also actively learning more
+                about cloud infrastructure and observability.
+              </p>
+              <p>
+                Outside of code, I read about software design, system failures,
+                and sometimes play with small side projects for fun and
+                learning.
+              </p>
+            </div>
+
+            <div class="card about-details reveal">
+              <h3>Quick Facts</h3>
+              <dl>
+                <div class="detail-row">
+                  <dt>Current focus</dt>
+                  <dd>Backend development, testing, and system design.</dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Goals</dt>
+                  <dd>
+                    Become a strong backend engineer who designs scalable
+                    systems and mentors others.
+                  </dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Strengths</dt>
+                  <dd>
+                    Attention to detail, structured thinking, willingness to
+                    refactor & improve.
+                  </dd>
+                </div>
+                <div class="detail-row">
+                  <dt>Learning</dt>
+                  <dd>
+                    Cloud fundamentals, advanced SQL, monitoring & alerting, and
+                    more ML basics.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SKILLS ================= -->
+        <section class="section" id="skills">
+          <div class="section-header reveal">
+            <h2>Skills</h2>
+            <p>A quick overview of tools and technologies I actually use.</p>
+          </div>
+
+          <div class="skills-grid">
+            <div class="card reveal">
+              <h3>Languages</h3>
+              <ul class="pill-list">
+                <li>Python</li>
+                <li>TypeScript</li>
+                <li>JavaScript</li>
+                <li>SQL</li>
+                <li>Node.js</li>
+              </ul>
+            </div>
+
+            <div class="card reveal">
+              <h3>Backend & Frameworks</h3>
+              <ul class="pill-list">
+                <li>FastAPI</li>
+                <li>NestJS</li>
+                <li>Express</li>
+                <li>REST APIs</li>
+                <li>asyncio</li>
+                <li>JWT</li>
+              </ul>
+            </div>
+
+            <div class="card reveal">
+              <h3>Databases & ORMs</h3>
+              <ul class="pill-list">
+                <li>PostgreSQL</li>
+                <li>DynamoDB</li>
+                <li>AuroraDB</li>
+                <li>Prisma ORM</li>
+                <li>SQLAlchemy</li>
+                <li>Alembic</li>
+              </ul>
+            </div>
+
+            <div class="card reveal">
+              <h3>Cloud & DevOps</h3>
+              <ul class="pill-list">
+                <li>AWS ECS Fargate</li>
+                <li>Docker</li>
+                <li>GitLab CI/CD</li>
+                <li>Infrastructure as Code</li>
+                <li>Container Orchestration</li>
+              </ul>
+            </div>
+
+            <div class="card reveal">
+              <h3>Architecture & Patterns</h3>
+              <ul class="pill-list">
+                <li>Domain-Driven Design</li>
+                <li>Event-Driven Architecture</li>
+                <li>Microservices</li>
+                <li>API Versioning</li>
+                <li>Distributed Systems</li>
+                <li>Concurrency Control</li>
+              </ul>
+            </div>
+
+            <div class="card reveal">
+              <h3>Practices & Concepts</h3>
+              <ul class="pill-list">
+                <li>Clean Code</li>
+                <li>Test-Driven Development</li>
+                <li>Error Handling & Resilience</li>
+                <li>Authentication & Authorization</li>
+                <li>Idempotency & Transactions</li>
+                <li>Performance Optimization</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="skills-matrix card reveal">
+            <h3>Comfort Level</h3>
+            <div class="skill-bar">
+              <div class="skill-bar-label">
+                <span>Backend Development</span><span>Advanced</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--fill: 85%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar">
+              <div class="skill-bar-label">
+                <span>API Design</span><span>Advanced</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--fill: 80%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar">
+              <div class="skill-bar-label">
+                <span>Databases & SQL</span><span>Advanced</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--fill: 80%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar">
+              <div class="skill-bar-label">
+                <span>DevOps & Cloud</span><span>Intermediate</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--fill: 70%"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= EXPERIENCE ================= -->
+        <section class="section" id="experience">
+          <div class="section-header reveal">
+            <h2>Experience</h2>
+            <p>Selected experiences that shaped the way I build software.</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item reveal">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <p class="timeline-period">01.2023 – 08.2025</p>
+                <h3>Backend Developer – Andersen</h3>
+                <p class="timeline-tagline">
+                  Worked as a Backend Developer across multiple Andersen client
+                  projects (Enterprise, Healthcare, FinTech) with a focus on
+                  TypeScript/Node.js and later Python/FastAPI.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <p class="timeline-period">05.2025 – 08.2025</p>
+                <h3>Python Backend Developer – FinTech Project</h3>
+                <p class="timeline-tagline">
+                  Designed and implemented high-throughput asynchronous REST
+                  APIs and external system integrations using FastAPI,
+                  optimizing request lifecycles with async I/O and non-blocking
+                  database access.
+                </p>
+                <ul>
+                  <li>
+                    Integrated backend services with external systems via REST
+                    APIs for secure data exchange.
+                  </li>
+                  <li>
+                    Architected transaction-safe workflows with idempotency
+                    guarantees, ensuring consistency across retries, partial
+                    failures, and concurrent requests.
+                  </li>
+                  <li>
+                    Implemented domain-driven service layers with clear
+                    separation between application, domain, and infrastructure
+                    concerns.
+                  </li>
+                  <li>
+                    Designed event-driven interactions between services using
+                    message-based patterns to decouple critical financial
+                    operations.
+                  </li>
+                  <li>
+                    Implemented distributed locking and concurrency control
+                    strategies to prevent race conditions in financial
+                    transactions.
+                  </li>
+                  <li>
+                    Optimized PostgreSQL performance through query planning
+                    analysis, indexing strategies, and connection pooling under
+                    high load.
+                  </li>
+                  <li>
+                    Designed and enforced API versioning and backward
+                    compatibility strategies for long-lived client integrations.
+                  </li>
+                  <li>
+                    Implemented secure authentication and authorization flows
+                    (JWT, role-based access control, scoped permissions).
+                  </li>
+                  <li>
+                    Added fault-tolerant error handling and graceful degradation
+                    mechanisms for downstream service failures.
+                  </li>
+                  <li>
+                    Contributed to architectural decisions around service
+                    decomposition, scalability limits, and synchronous vs
+                    asynchronous communication models.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <p class="timeline-period">12.2024 – 05.2025</p>
+                <h3>Node.js Developer – NoDaNorm MedCare</h3>
+                <p class="timeline-tagline">
+                  Implemented backend features for a healthcare management
+                  platform, designing modular NestJS APIs for scheduling,
+                  patient management, and medical workflows.
+                </p>
+                <ul>
+                  <li>
+                    Optimized Prisma queries and PostgreSQL transactions for
+                    performance and data integrity.
+                  </li>
+                  <li>
+                    Added DTO validation, guards, exception filters, and custom
+                    interceptors to enhance API reliability.
+                  </li>
+                  <li>
+                    Improved backend robustness through audit logging and
+                    request optimization.
+                  </li>
+                  <li>
+                    Participated in sprints, retrospectives, and daily Agile
+                    ceremonies.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <p class="timeline-period">01.2023 – 11.2024</p>
+                <h3>Node.js Developer – Digital Giant Support</h3>
+                <p class="timeline-tagline">
+                  Developed backend APIs for a digital asset review platform,
+                  focusing on scalable architecture and robust error handling.
+                </p>
+                <ul>
+                  <li>
+                    Designed error-handling middleware, global exception
+                    filters, and structured debugging tools.
+                  </li>
+                  <li>
+                    Implemented review workflows, notification endpoints, and
+                    version-comparison logic.
+                  </li>
+                  <li>
+                    Integrated services with DynamoDB and AuroraDB for
+                    large-scale asset storage.
+                  </li>
+                  <li>
+                    Deployed services via AWS ECS Fargate using GitLab CI
+                    pipelines.
+                  </li>
+                  <li>
+                    Collaborated with designers, frontend engineers, and PMs
+                    within Agile processes.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="projects">
+          <div class="section-header reveal">
+            <h2>Projects</h2>
+            <p>A mix of learning projects and production-style experiments.</p>
+          </div>
+
+          <div class="project-filters reveal">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="backend">Backend</button>
+            <button class="filter-btn" data-filter="api">APIs</button>
+            <button class="filter-btn" data-filter="ml">ML & Data</button>
+            <button class="filter-btn" data-filter="other">Other</button>
+          </div>
+
+          <div class="projects-grid">
+            <article class="project-card reveal" data-category="backend api">
+              <div class="project-header">
+                <h3>Churn Prediction Service</h3>
+                <span class="project-tag">Backend • ML</span>
+              </div>
+              <p>
+                A backend service exposing an API for customer churn prediction
+                using a trained ML model. Includes endpoints for predictions,
+                monitoring, and simple reports.
+              </p>
+              <ul class="project-tech">
+                <li>FastAPI</li>
+                <li>Scikit-learn</li>
+                <li>PostgreSQL</li>
+                <li>Docker</li>
+              </ul>
+              <div class="project-links">
+                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+                <span>•</span>
+                <!-- <a href="#" target="_blank" rel="noreferrer">Demo (if hosted)</a> -->
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-category="backend api">
+              <div class="project-header">
+                <h3>Task Manager API</h3>
+                <span class="project-tag">Backend</span>
+              </div>
+              <p>
+                A robust REST API for managing tasks with authentication,
+                filtering, and pagination. Designed with clean architecture and
+                testing in mind.
+              </p>
+              <ul class="project-tech">
+                <li>NestJS</li>
+                <li>TypeScript</li>
+                <li>PostgreSQL</li>
+                <li>JWT Auth</li>
+              </ul>
+              <div class="project-links">
+                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-category="backend">
+              <div class="project-header">
+                <h3>Scheduling & Availability Service</h3>
+                <span class="project-tag">Backend • Scheduling</span>
+              </div>
+              <p>
+                API that manages working hours, closures, and appointment slots
+                for a facility. Includes validation to prevent overlapping
+                appointments and warn about conflicts.
+              </p>
+              <ul class="project-tech">
+                <li>NestJS</li>
+                <li>Prisma</li>
+                <li>PostgreSQL</li>
+              </ul>
+              <div class="project-links">
+                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-category="ml">
+              <div class="project-header">
+                <h3>Network Traffic Classifier</h3>
+                <span class="project-tag">ML</span>
+              </div>
+              <p>
+                A classification project using a network datasets to distinguish
+                between normal and malicious traffic, exploring different ML
+                models and metrics.
+              </p>
+              <ul class="project-tech">
+                <li>Python</li>
+                <li>Pandas</li>
+                <li>Scikit-learn</li>
+              </ul>
+              <div class="project-links">
+                <!-- <a href="#" target="_blank" rel="noreferrer">Notebook</a> -->
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-category="other">
+              <div class="project-header">
+                <h3>Hadith Browser App</h3>
+                <span class="project-tag">Frontend • Personal</span>
+              </div>
+              <p>
+                A web app for browsing and filtering Hadith collections with
+                bookmarking and dark mode, focused on a clean reading
+                experience.
+              </p>
+              <ul class="project-tech">
+                <li>React</li>
+                <li>TypeScript</li>
+                <li>Tailwind CSS</li>
+              </ul>
+              <div class="project-links">
+                <!-- <a href="#" target="_blank" rel="noreferrer">View Code</a> -->
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-category="other">
+              <div class="project-header">
+                <h3>Portfolio Playground</h3>
+                <span class="project-tag">This Site</span>
+              </div>
+              <p>
+                A hand-crafted portfolio template focusing on clarity,
+                structure, and code quality. Built with vanilla HTML, CSS, and
+                JavaScript.
+              </p>
+              <ul class="project-tech">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+              <div class="project-links">
+                <a href="#" target="_blank" rel="noreferrer">Current Page</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ================= JOURNEY / TIMELINE ================= -->
+        <section class="section" id="timeline">
+          <div class="section-header reveal">
+            <h2>Learning Journey</h2>
+            <p>How my interests evolved over time.</p>
+          </div>
+
+          <div class="journey-grid">
+            <div class="card reveal">
+              <h3>From basics to backend</h3>
+              <p>
+                I started with programming fundamentals and slowly realized that
+                I love the “behind the scenes” part of products: APIs, data
+                flows, and system behavior.
+              </p>
+              <p>
+                Over time, I moved from just writing code that works to writing
+                code that is structured, tested, and maintainable.
+              </p>
+            </div>
+
+            <div class="card reveal">
+              <h3>What I’m focusing on now</h3>
+              <ul class="checklist">
+                <li>
+                  Designing APIs that are predictable and well-documented.
+                </li>
+                <li>Handling edge cases and errors gracefully.</li>
+                <li>Writing tests early instead of “later”.</li>
+                <li>
+                  Understanding how systems behave in production, not just in
+                  localhost.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card reveal">
+              <h3>What’s next</h3>
+              <ul class="checklist">
+                <li>
+                  Dive deeper into observability (logs, metrics, tracing).
+                </li>
+                <li>
+                  Learn more about distributed systems & scaling patterns.
+                </li>
+                <li>
+                  Explore more ML-in-production patterns (not just notebooks).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section class="section" id="contact">
+          <div class="section-header reveal">
+            <h2>Contact</h2>
+            <p>
+              Want to work together, or just say hi? I’d love to hear from you.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <div class="card reveal">
+              <h3>Let’s talk</h3>
+              <p>
+                Whether it’s about backend work, internships, side projects, or
+                just exchanging ideas about software – feel free to reach out.
+              </p>
+              <ul class="contact-list">
+                <li>
+                  <span>📧</span>
+                  <a href="mailto:shabnamnezerli@gmail.com"
+                    >shabnamnezerli@gmail.com</a
+                  >
+                </li>
+                <li>
+                  <span>💻</span>
+                  <a
+                    href="https://github.com/nazarli-shabnam"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    github.com/nazarli-shabnam
+                  </a>
+                </li>
+                <li>
+                  <span>🔗</span>
+                  <a
+                    href="https://www.linkedin.com/in/shabnamnazarli/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    linkedin.com/in/shabnamnazarli
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <form class="card contact-form reveal" id="contactForm">
+              <h3>Send a message</h3>
+              <div class="form-field">
+                <label for="name">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <label for="reason">Reason</label>
+                <select id="reason" name="reason">
+                  <option value="collab">Collaboration / Offer</option>
+                  <option value="question">Question</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Write something nice…"
+                  required
+                ></textarea>
+              </div>
+              <button class="btn primary" type="submit">Send Message</button>
+              <p class="form-note" style="display: none"></p>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <!-- ================= FOOTER ================= -->
+      <footer class="footer">
+        <p>
+          © <span id="year"></span> Shabnam. Built with focus on simplicity and
+          clarity.
+        </p>
+        <p class="footer-small">
+          No sensitive data here – just skills, projects, and a lot of
+          curiosity.
+        </p>
+      </footer>
+
+      <button id="scrollTopBtn" class="scroll-top" aria-label="Scroll to top">
+        ↑
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
