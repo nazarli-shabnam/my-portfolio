@@ -838,8 +838,24 @@
       <button id="scrollTopBtn" class="scroll-top" aria-label="Scroll to top">
         ↑
       </button>
+
+      <div class="music-control-wrapper">
+        <button
+          id="musicToggle"
+          class="music-toggle"
+          aria-label="Toggle background music"
+        >
+          <span class="music-icon">🎵</span>
+        </button>
+        <div id="musicHint" class="music-hint" aria-hidden="true">
+          <span class="hint-text">Psst... 👉</span>
+        </div>
+      </div>
     </div>
 
+    <div id="youtube-player" style="display: none"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
   </body>
 </html>

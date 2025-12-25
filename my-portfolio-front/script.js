@@ -304,3 +304,114 @@ if (!form) {
     }
   });
 }
+
+let youtubePlayer;
+let musicStarted = false;
+let musicPaused = false;
+const musicToggle = document.getElementById("musicToggle");
+const musicIcon = musicToggle.querySelector(".music-icon");
+const musicHint = document.getElementById("musicHint");
+
+function onYouTubeIframeAPIReady() {
+  youtubePlayer = new YT.Player("youtube-player", {
+    height: "0",
+    width: "0",
+    videoId: "7YDdfIeeJTU",
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      disablekb: 1,
+      enablejsapi: 1,
+      fs: 0,
+      iv_load_policy: 3,
+      loop: 1,
+      modestbranding: 1,
+      playsinline: 1,
+      rel: 0,
+      showinfo: 0,
+      mute: 0,
+    },
+    events: {
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange,
+    },
+  });
+}
+
+function onPlayerReady(event) {
+  event.target.setVolume(100);
+
+
+  setTimeout(() => {
+    if (!musicPaused) {
+      try {
+        event.target.setVolume(100);
+        event.target.playVideo();
+        musicStarted = true;
+
+        musicToggle.classList.add("playing");
+
+        setTimeout(() => {
+          musicHint.classList.add("show");
+          musicHint.setAttribute("aria-hidden", "false");
+
+          setTimeout(() => {
+            if (
+              event.target.getPlayerState() === YT.PlayerState.PLAYING &&
+              !event.target.isMuted()
+            ) {
+              musicHint.classList.remove("show");
+              musicHint.setAttribute("aria-hidden", "true");
+            }
+          }, 5000);
+        }, 500);
+      } catch (e) {
+        console.log("Autoplay blocked by browser");
+        musicHint.classList.add("show");
+        musicHint.setAttribute("aria-hidden", "false");
+      }
+    }
+  }, 10000);
+}
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING) {
+    musicToggle.classList.add("playing");
+    musicPaused = false;
+
+    if (youtubePlayer && !youtubePlayer.isMuted()) {
+      musicHint.classList.remove("show");
+      musicHint.setAttribute("aria-hidden", "true");
+    }
+  } else if (event.data === YT.PlayerState.PAUSED) {
+    musicToggle.classList.remove("playing");
+    musicPaused = true;
+  }
+}
+
+musicToggle.addEventListener("click", () => {
+  if (!youtubePlayer) return;
+
+  musicHint.classList.remove("show");
+  musicHint.setAttribute("aria-hidden", "true");
+
+  youtubePlayer.unMute();
+  youtubePlayer.setVolume(100);
+
+  const currentState = youtubePlayer.getPlayerState();
+  const isMuted = youtubePlayer.isMuted();
+
+  if (currentState === YT.PlayerState.PLAYING && !isMuted) {
+    youtubePlayer.pauseVideo();
+    musicPaused = true;
+    musicToggle.classList.remove("playing");
+  } else {
+    if (isMuted) {
+      youtubePlayer.unMute();
+    }
+    youtubePlayer.playVideo();
+    musicPaused = false;
+    musicStarted = true;
+    musicToggle.classList.add("playing");
+  }
+});

@@ -88,7 +88,6 @@ body.light .scroll-top {
   color: #4f46e5;
 }
 
-
 /* Global reset */
 
 *,
@@ -228,8 +227,8 @@ body {
   align-items: center;
   cursor: pointer;
   font-size: 14px;
-  transition: background var(--transition-fast), transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+  transition: background var(--transition-fast),
+    transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .theme-toggle:hover {
@@ -590,11 +589,7 @@ body.light .card {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(
-    to bottom,
-    var(--accent-strong),
-    transparent 70%
-  );
+  background: linear-gradient(to bottom, var(--accent-strong), transparent 70%);
   opacity: 0.7;
 }
 
@@ -904,9 +899,8 @@ body.light .form-note {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--transition-fast),
-    visibility var(--transition-fast), transform var(--transition-fast),
-    background var(--transition-fast);
+  transition: opacity var(--transition-fast), visibility var(--transition-fast),
+    transform var(--transition-fast), background var(--transition-fast);
   z-index: 15;
 }
 
@@ -920,7 +914,142 @@ body.light .form-note {
   background-color: var(--accent-soft);
 }
 
-/* Reveal animation */
+
+.music-control-wrapper {
+  position: fixed;
+  right: 18px;
+  bottom: 60px;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: row-reverse;
+}
+
+.music-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background-color: rgba(15, 23, 42, 0.9);
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast), transform var(--transition-fast),
+    background var(--transition-fast), box-shadow var(--transition-fast);
+  backdrop-filter: blur(10px);
+}
+
+.music-toggle:hover {
+  transform: translateY(-2px);
+  background-color: var(--accent-soft);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.music-toggle.playing {
+  background-color: var(--accent-soft);
+  border-color: var(--accent-strong);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(124, 58, 237, 0);
+  }
+}
+
+body.light .music-toggle {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #e5e7eb;
+}
+
+body.light .music-toggle:hover {
+  background-color: #ede9fe;
+}
+
+body.light .music-toggle.playing {
+  background-color: #ede9fe;
+  border-color: #7c3aed;
+}
+
+.music-hint {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: rgba(15, 23, 42, 0.98);
+  border: 1px solid var(--accent-strong);
+  border-radius: 24px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  animation: hintPulse 2s ease-in-out infinite, hintSlideIn 0.5s ease-out;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+  pointer-events: none;
+}
+
+.music-hint.show {
+  display: flex;
+}
+
+.hint-text {
+  font-weight: 500;
+}
+
+.hint-arrow {
+  font-size: 16px;
+  animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes hintSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hintPulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+    border-color: var(--accent-strong);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(124, 58, 237, 0.6);
+    border-color: var(--accent-strong);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes arrowBounce {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+body.light .music-hint {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: #e5e7eb;
+  color: var(--text);
+}
+
 
 .reveal {
   opacity: 0;
@@ -933,7 +1062,6 @@ body.light .form-note {
   transform: translateY(0);
 }
 
-/* Utilities */
 
 .hidden {
   display: none !important;
@@ -988,8 +1116,7 @@ body.light .form-note {
     transform: scaleY(0.95);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--transition-fast),
-      transform var(--transition-fast);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
   }
 
   .nav-links.open {
@@ -1163,10 +1290,8 @@ body,
 .timeline-content,
 .project-card,
 .filter-btn {
-  transition: background-color 0.35s ease,
-    color 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
+  transition: background-color 0.35s ease, color 0.35s ease,
+    border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 /* ===================================================
