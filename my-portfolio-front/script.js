@@ -154,7 +154,7 @@ if (!form) {
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
       ? "http://localhost:8000" // Local development
-      : "https://my-portfolio-avxr.onrender.com";
+      : "https://nazarli-shabnam-be.onrender.com";
 
   // Helper function to show form feedback
   function showFormFeedback(message, isError = false) {
