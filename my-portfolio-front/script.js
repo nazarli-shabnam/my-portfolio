@@ -139,7 +139,7 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
-// ========== Contact Form ==========
+// ========== Contact Form (Web3Forms) ==========
 const form = document.getElementById("contactForm");
 
 if (!form) {
@@ -147,24 +147,13 @@ if (!form) {
 } else {
   const submitButton = form.querySelector('button[type="submit"]');
   const formNote = form.querySelector(".form-note");
+  const WEB3FORMS_ACCESS_KEY = "762b120c-03f5-485c-a6d9-366774cfe053";
 
-  // API URL configuration - works for both local and production
-  // In production, set this to your Render backend URL
-  const API_BASE_URL =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-      ? "http://localhost:8000" // Local development
-      : "https://nazarli-shabnam-be.onrender.com";
-
-  // Helper function to show form feedback
   function showFormFeedback(message, isError = false) {
     if (!formNote) return;
-
     formNote.textContent = message;
     formNote.style.color = isError ? "var(--danger)" : "var(--accent-strong)";
     formNote.style.display = "block";
-
-    // Auto-hide success messages after 5 seconds
     if (!isError) {
       setTimeout(() => {
         formNote.style.display = "none";
@@ -172,134 +161,52 @@ if (!form) {
     }
   }
 
-  // Helper function to set form loading state
   function setFormLoading(isLoading) {
     submitButton.disabled = isLoading;
     submitButton.textContent = isLoading ? "Sending..." : "Send Message";
     submitButton.style.opacity = isLoading ? "0.7" : "1";
     submitButton.style.cursor = isLoading ? "not-allowed" : "pointer";
-
-    // Disable all form fields while submitting
-    const formFields = form.querySelectorAll("input, select, textarea");
-    formFields.forEach((field) => {
+    form.querySelectorAll("input, select, textarea").forEach((field) => {
       field.disabled = isLoading;
     });
   }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    // Hide previous feedback
-    if (formNote) {
-      formNote.style.display = "none";
-    }
-
-    // Set loading state
+    if (formNote) formNote.style.display = "none";
     setFormLoading(true);
 
     try {
-      // Get form values directly from form elements
-      const nameInput = form.querySelector('input[name="name"]');
-      const emailInput = form.querySelector('input[name="email"]');
-      const reasonSelect = form.querySelector('select[name="reason"]');
-      const messageTextarea = form.querySelector('textarea[name="message"]');
+      const formData = new FormData(form);
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
 
-      // Get values with null safety
-      const name = nameInput ? nameInput.value : "";
-      const email = emailInput ? emailInput.value : "";
-      const reason = reasonSelect ? reasonSelect.value : "other";
-      const message = messageTextarea ? messageTextarea.value : "";
-
-      // Debug logging (remove in production)
-      console.log("Form elements found:", {
-        nameInput: !!nameInput,
-        emailInput: !!emailInput,
-        reasonSelect: !!reasonSelect,
-        messageTextarea: !!messageTextarea,
-      });
-      console.log("Form values:", { name, email, reason, message });
-
-      const payload = {
-        name: name ? name.trim() : "",
-        email: email ? email.trim() : "",
-        reason: reason || "other",
-        message: message ? message.trim() : "",
-      };
-
-      console.log("Payload after trim:", payload);
-
-      // Basic client-side validation with specific error messages
-      const missingFields = [];
-      if (!payload.name || payload.name.length === 0) {
-        missingFields.push("name");
-      }
-      if (!payload.email || payload.email.length === 0) {
-        missingFields.push("email");
-      }
-      if (!payload.message || payload.message.length === 0) {
-        missingFields.push("message");
-      }
-
-      if (missingFields.length > 0) {
-        throw new Error(`Please fill in: ${missingFields.join(", ")}`);
-      }
-
-      // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(payload.email)) {
-        throw new Error("Please enter a valid email address.");
-      }
-
-      const response = await fetch(`${API_BASE_URL}/contact`, {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
 
-      // Check if response is JSON
-      const contentType = response.headers.get("content-type");
-      let data = {};
+      const data = await response.json();
 
-      if (contentType && contentType.includes("application/json")) {
-        data = await response.json();
-      } else {
-        // If not JSON, get text response
-        const text = await response.text();
-        throw new Error(text || "Server returned an unexpected response.");
-      }
-
-      if (response.ok) {
-        const message =
-          data.email_sent === false
-            ? "Message received! (Email notification is not set up on the server, but your message was recorded.)"
-            : (data.message ||
-                "Thanks! Your message was sent ✨ I'll get back to you soon.");
-        showFormFeedback(message, false);
+      if (data.success) {
+        showFormFeedback(
+          data.message || "Thanks! Your message was sent ✨ I'll get back to you soon.",
+          false
+        );
         form.reset();
       } else {
-        // Server returned an error
-        throw new Error(
-          data.detail ||
-            data.message ||
-            "Something went wrong. Please try again."
+        showFormFeedback(
+          data.message || "Something went wrong. Please try again.",
+          true
         );
       }
     } catch (error) {
-      // Network error or validation error
-      let errorMessage = "Oops! Something went wrong. ";
-
-      if (
+      const msg =
         error.message.includes("Failed to fetch") ||
         error.message.includes("NetworkError")
-      ) {
-        errorMessage += "Please check your connection and try again.";
-      } else {
-        errorMessage += error.message;
-      }
-
-      showFormFeedback(errorMessage, true);
+          ? "Please check your connection and try again."
+          : error.message;
+      showFormFeedback("Oops! " + msg, true);
     } finally {
-      // Reset loading state
       setFormLoading(false);
     }
   });

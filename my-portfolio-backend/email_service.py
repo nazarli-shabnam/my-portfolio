@@ -1,10 +1,10 @@
 """
 Email notification service for contact form submissions.
-Supports EmailJS, SMTP2GO, or SendGrid (set env vars for the one you use).
+Supports Resend (recommended), SMTP2GO, SendGrid, or EmailJS (set env vars for the one you use).
 
-- EmailJS: no domain needed; create a template in dashboard, use service/template/user IDs.
-- SMTP2GO: free 200/day, 1000/month; may require verified domain.
-- SendGrid: free tier often 100/day with possible time/credit limits.
+- Resend: simple API, 100/day free; verify domain and set from address.
+- SMTP2GO: free 200/day, 1000/month.
+- SendGrid / EmailJS: alternatives.
 """
 import json
 import os
@@ -12,7 +12,13 @@ import urllib.request
 import urllib.error
 from typing import Optional
 
-# Optional SendGrid import – only needed if using SendGrid
+# Optional Resend – recommended
+try:
+    import resend
+except ImportError:
+    resend = None
+
+# Optional SendGrid
 try:
     from sendgrid import SendGridAPIClient
     from sendgrid.helpers.mail import Mail
@@ -70,6 +76,36 @@ Reply directly to: {sender_email}
     return html_content, text_content
 
 
+def _send_via_resend(
+    from_email: str,
+    to_email: str,
+    reply_to: str,
+    subject: str,
+    html_content: str,
+    text_content: str,
+) -> tuple[bool, Optional[str]]:
+    """Send via Resend API. From: verified sender, To: your inbox, Reply-To: form submitter."""
+    if resend is None:
+        return False, "resend package not installed"
+    api_key = (os.getenv("RESEND_API_KEY") or "").strip()
+    if not api_key:
+        return False, "RESEND_API_KEY not set"
+
+    resend.api_key = api_key
+    params = {
+        "from": from_email,
+        "to": [to_email],
+        "subject": subject,
+        "html": html_content,
+        "headers": {"Reply-To": reply_to},
+    }
+    try:
+        resend.Emails.send(params)
+        return True, None
+    except Exception as e:
+        return False, str(e)
+
+
 def _send_via_emailjs(
     to_email: str,
     subject: str,
@@ -122,7 +158,10 @@ def _send_via_emailjs(
             body = e.read().decode("utf-8", errors="replace")
         except Exception:
             pass
-        return False, body or f"HTTP {e.code} {e.reason}"
+        err = body or f"HTTP {e.code} {e.reason}"
+        if "1010" in err:
+            err = f"{err} (Enable 'Allow API requests from non-browser apps' in EmailJS → Account → Security)"
+        return False, err
     except Exception as e:
         return False, str(e)
 
@@ -223,21 +262,38 @@ def send_contact_notification(
 ) -> tuple[bool, Optional[str]]:
     """
     Send an email notification when someone submits the contact form.
-    Uses SMTP2GO if SMTP2GO_API_KEY is set, otherwise SendGrid if SENDGRID_API_KEY is set.
-
-    From: verified sender (env). To: your inbox. Reply-To: form submitter.
+    From: verified sender. To: your inbox. Reply-To: form submitter.
     """
     notification_email = recipient_email or os.getenv("NOTIFICATION_EMAIL", "shabnamnezerli@gmail.com")
     reason_text = _reason_text(reason)
     subject = f"New Contact Form Submission from {sender_name}"
     html_content, text_content = _build_email_content(sender_name, sender_email, reason_text, message)
 
-    # Provider selection: EmailJS first, then SMTP2GO, then SendGrid
+    # Provider selection: Resend first, then EmailJS, SMTP2GO, SendGrid
+    resend_key = (os.getenv("RESEND_API_KEY") or "").strip()
+    resend_from = (os.getenv("RESEND_FROM_EMAIL") or "").strip()
     emailjs_service = (os.getenv("EMAILJS_SERVICE_ID") or "").strip()
     emailjs_template = (os.getenv("EMAILJS_TEMPLATE_ID") or "").strip()
     emailjs_user = (os.getenv("EMAILJS_USER_ID") or "").strip()
     smtp2go_key = (os.getenv("SMTP2GO_API_KEY") or "").strip()
     sendgrid_key = (os.getenv("SENDGRID_API_KEY") or "").strip()
+
+    if resend_key and resend_from:
+        print("🔍 Using Resend for email...")
+        print(f"   RESEND_FROM_EMAIL: {resend_from}  |  NOTIFICATION_EMAIL: {notification_email}")
+        success, err = _send_via_resend(
+            from_email=resend_from,
+            to_email=notification_email,
+            reply_to=sender_email,
+            subject=subject,
+            html_content=html_content,
+            text_content=text_content,
+        )
+        if success:
+            print(f"✅ Email notification sent via Resend to {notification_email}")
+        else:
+            print(f"❌ Resend failed: {err}")
+        return success, err
 
     if emailjs_service and emailjs_template and emailjs_user:
         print("🔍 Using EmailJS for email...")
@@ -295,5 +351,5 @@ def send_contact_notification(
             print(f"❌ SendGrid failed: {err}")
         return success, err
 
-    print("⚠️  No email provider configured. Set EmailJS (SERVICE_ID, TEMPLATE_ID, USER_ID), SMTP2GO_API_KEY, or SENDGRID_API_KEY on Render.")
+    print("⚠️  No email provider configured. Set RESEND_API_KEY + RESEND_FROM_EMAIL, or another provider's vars on Render.")
     return False, "Email service not configured"
