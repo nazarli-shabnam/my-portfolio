@@ -139,7 +139,7 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
-// ========== Contact Form (Web3Forms) ==========
+// ========== Contact Form (FormSubmit – free, unlimited, Gmail OK) ==========
 const form = document.getElementById("contactForm");
 
 if (!form) {
@@ -147,7 +147,8 @@ if (!form) {
 } else {
   const submitButton = form.querySelector('button[type="submit"]');
   const formNote = form.querySelector(".form-note");
-  const WEB3FORMS_ACCESS_KEY = "762b120c-03f5-485c-a6d9-366774cfe053";
+  // FormSubmit token (hides your email from page source). Get it from the activation email.
+  const FORMSUBMIT_TOKEN = "e48e9bc3d858bd5614c84dc57f694977";
 
   function showFormFeedback(message, isError = false) {
     if (!formNote) return;
@@ -177,37 +178,37 @@ if (!form) {
     setFormLoading(true);
 
     try {
-      const formData = new FormData(form);
-      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-
-      const name = formData.get("name") || "Someone";
+      const name = form.querySelector('input[name="name"]')?.value?.trim() || "";
+      const email = form.querySelector('input[name="email"]')?.value?.trim() || "";
       const reasonSelect = form.querySelector('select[name="reason"]');
       const reasonLabel = reasonSelect?.selectedOptions?.[0]?.textContent || "Contact";
-      formData.set("subject", `Portfolio: ${name} – ${reasonLabel}`);
+      const message = form.querySelector('textarea[name="message"]')?.value?.trim() || "";
 
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const payload = {
+        name,
+        email,
+        reason: reasonLabel,
+        message,
+        _subject: `Portfolio: ${name || "Someone"} – ${reasonLabel}`,
+      };
+
+      const response = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_TOKEN}`, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        showFormFeedback(
-          data.message || "Thanks! Your message was sent ✨ I'll get back to you soon.",
-          false
-        );
+        showFormFeedback("Thanks! Your message was sent ✨ I'll get back to you soon.", false);
         form.reset();
       } else {
-        showFormFeedback(
-          data.message || "Something went wrong. Please try again.",
-          true
-        );
+        showFormFeedback(data.message || "Something went wrong. Please try again.", true);
       }
     } catch (error) {
       const msg =
-        error.message.includes("Failed to fetch") ||
-        error.message.includes("NetworkError")
+        error.message.includes("Failed to fetch") || error.message.includes("NetworkError")
           ? "Please check your connection and try again."
           : error.message;
       showFormFeedback("Oops! " + msg, true);
