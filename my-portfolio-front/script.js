@@ -269,12 +269,12 @@ if (!form) {
       }
 
       if (response.ok) {
-        // Success
-        showFormFeedback(
-          data.message ||
-            "Thanks! Your message was sent ✨ I'll get back to you soon.",
-          false
-        );
+        const message =
+          data.email_sent === false
+            ? "Message received! (Email notification is not set up on the server, but your message was recorded.)"
+            : (data.message ||
+                "Thanks! Your message was sent ✨ I'll get back to you soon.");
+        showFormFeedback(message, false);
         form.reset();
       } else {
         // Server returned an error
