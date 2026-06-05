@@ -26,12 +26,120 @@
     </header>
 
     <main>
-      <!-- intro: Task 2 -->
-      <!-- experience: Task 3 -->
-      <!-- skills: Task 4 -->
-      <!-- projects: Task 5 -->
-      <!-- beyond: Task 6 -->
-      <!-- contact: Task 7 -->
+      <section class="intro" id="top">
+        <h1>Shabnam Nazarli</h1>
+        <div class="role">AI-Oriented Software Engineer — Baku, Azerbaijan</div>
+        <p>I build backend systems that hold up in production: high-throughput APIs, transaction-safe workflows, and the boring-on-purpose reliability that keeps payments and orders correct under load. Three years across fintech, healthcare, and enterprise — mostly Go, Python, and TypeScript.</p>
+        <p>I like owning a problem end to end, finding where the real constraints are, and making the pragmatic call between shipping fast and getting it right.</p>
+        <div class="links mono">
+          <a href="https://github.com/nazarli-shabnam" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/shabnamnazarli/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="mailto:shabnamnezerli@gmail.com">Email</a>
+          <div class="avail">Open to remote roles.</div>
+        </div>
+      </section>
+      <section id="experience">
+        <h2>Experience</h2>
+
+        <div class="job">
+          <div class="line"><span class="title">Golang Backend Developer</span><span class="when mono">2026 — Present</span></div>
+          <div class="co">Alievs Space LLC</div>
+          <p>High-throughput Go services for e-commerce — catalog, orders, payments, inventory. Idempotent, retry-safe pipelines; PostgreSQL tuned with EXPLAIN, partial indexes, and N+1 elimination; Redis caching under peak traffic.</p>
+        </div>
+
+        <div class="job">
+          <div class="line"><span class="title">Backend Developer</span><span class="when mono">2024 — 2025</span></div>
+          <div class="co">Andersen</div>
+          <p>Three client projects across enterprise, healthcare, and fintech — TypeScript/Node.js and Python/FastAPI.</p>
+        </div>
+
+        <div class="job sub">
+          <div class="line"><span class="title">Python Backend — PRetty (Banking)</span><span class="when mono">2025</span></div>
+          <p>Async FastAPI with idempotency guarantees and distributed locking to prevent race conditions in financial operations. Domain-driven structure for long-term maintainability.</p>
+        </div>
+
+        <div class="job sub">
+          <div class="line"><span class="title">Node.js — NoDaNorm MedCare</span><span class="when mono">2024 — 2025</span></div>
+          <p>Modular NestJS services for healthcare workflows, with validation, guards, audit logging, and tuned PostgreSQL access.</p>
+        </div>
+
+        <div class="job sub">
+          <div class="line"><span class="title">Node.js — Digital Giant Support</span><span class="when mono">2024</span></div>
+          <p>Backend APIs for a high-volume digital-asset platform: centralized error handling, review workflows, and DynamoDB/AuroraDB integration on AWS ECS.</p>
+        </div>
+
+        <div class="job">
+          <div class="line"><span class="title">IT Specialist, Software &amp; Infrastructure</span><span class="when mono">2024 — 2026</span></div>
+          <div class="co">Texno Construction LLC</div>
+          <p>Owned uptime of internal systems. Automated operational work with Python and shell, ran incident response, and introduced monitoring and logging across Linux/Windows environments.</p>
+        </div>
+      </section>
+      <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+          <div class="row"><span class="k">Languages</span><span>Go, Python, TypeScript, JavaScript, SQL, PHP, C/C++</span></div>
+          <div class="row"><span class="k">Backend</span><span>FastAPI, Django, NestJS, async I/O, background jobs, event-driven patterns</span></div>
+          <div class="row"><span class="k">Data</span><span>PostgreSQL, MongoDB, MySQL, DynamoDB, Redis</span></div>
+          <div class="row"><span class="k">Infra</span><span>Docker, AWS ECS (Fargate), CI/CD, monitoring &amp; observability</span></div>
+          <div class="row"><span class="k">Focus</span><span>Idempotency, concurrency control, performance tuning, microservices</span></div>
+        </div>
+      </section>
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="proj">
+          <div><div class="pn">Order Processing System</div><div class="pd">Event-driven microservices — Redis pub/sub, idempotency, async order handling.</div></div>
+          <a href="https://github.com/nazarli-shabnam/order-processing" target="_blank" rel="noreferrer">Code →</a>
+        </div>
+        <div class="proj">
+          <div><div class="pn">Subscription Tracker</div><div class="pd">FastAPI service for renewals, costs, and usage analytics. Clean architecture.</div></div>
+          <a href="https://github.com/nazarli-shabnam/subscription-tracker" target="_blank" rel="noreferrer">Code →</a>
+        </div>
+        <div class="proj">
+          <div><div class="pn">Medical Chatbot</div><div class="pd">RAG assistant on Gemini with vector retrieval and guarded prompts.</div></div>
+          <a href="https://github.com/nazarli-shabnam/medical-chatbot" target="_blank" rel="noreferrer">Code →</a>
+        </div>
+        <div class="proj">
+          <div><div class="pn">The9Books</div><div class="pd">Cataloguing API with search, filtering, and recommendations.</div></div>
+          <a href="https://github.com/nazarli-shabnam/The9Books" target="_blank" rel="noreferrer">Code →</a>
+        </div>
+      </section>
+      <section id="beyond">
+        <h2>Beyond work</h2>
+        <div class="facts">
+          <p><b>Languages:</b> Azerbaijani (native), Turkish, English, Russian, French, Arabic.</p>
+          <p><b>Education:</b> B.Sc. Computer Science, dual diploma — Université de Strasbourg &amp; UFAZ.</p>
+          <p><b>Certifications:</b> ICPC Certificate of Achievement (2024), Constructor University, Harbour.Space.</p>
+        </div>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
+        <p class="contact-lead">The quickest way to reach me is email, but the form works too — I read everything and reply to anything that isn't a recruiter blast.</p>
+        <form id="contactForm">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="field">
+            <label for="reason">Reason</label>
+            <select id="reason" name="reason">
+              <option value="Collaboration / Offer">Collaboration / Offer</option>
+              <option value="Question">Question</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button class="btn" type="submit">Send message</button>
+          <p class="form-note" aria-live="polite"></p>
+        </form>
+        <p class="email-line">Or just email <a href="mailto:shabnamnezerli@gmail.com">shabnamnezerli@gmail.com</a>.</p>
+      </section>
     </main>
 
     <footer class="site">
