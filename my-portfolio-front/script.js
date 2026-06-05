@@ -74,8 +74,20 @@ if (form) {
 }
 
 // ===== Background music (YouTube IFrame API) =====
+// Browsers block autoplay-with-sound until the user interacts with the page.
+// So: attempt autoplay, but also start on the first user gesture anywhere, and
+// keep the button label honest ("play music" / "pause music") as the cue.
 let player;
+let musicReady = false;
 const musicBtn = document.getElementById("musicBtn");
+const musicLabel = document.getElementById("musicLabel");
+
+function startMusic() {
+  if (!musicReady) return;
+  player.unMute();
+  player.setVolume(60);
+  player.playVideo();
+}
 
 window.onYouTubeIframeAPIReady = function () {
   player = new YT.Player("yt", {
@@ -87,23 +99,41 @@ window.onYouTubeIframeAPIReady = function () {
       playlist: "7YDdfIeeJTU", modestbranding: 1, playsinline: 1, rel: 0,
     },
     events: {
-      onReady: () => { player.setVolume(60); try { player.playVideo(); } catch (e) {} },
+      onReady: () => {
+        musicReady = true;
+        player.setVolume(60);
+        try { player.playVideo(); } catch (e) {} // may be blocked; first gesture covers it
+      },
       onStateChange: (e) => {
-        if (e.data === YT.PlayerState.PLAYING) musicBtn.classList.add("playing");
-        else musicBtn.classList.remove("playing");
+        const playing = e.data === YT.PlayerState.PLAYING;
+        musicBtn.classList.toggle("playing", playing);
+        if (musicLabel) musicLabel.textContent = playing ? "pause music" : "play music";
       },
     },
   });
 };
 
+// Start on the first interaction anywhere — unless that interaction is the
+// music button itself, which has its own toggle handler below.
+function startOnFirstGesture(e) {
+  if (musicBtn && e.target instanceof Node && musicBtn.contains(e.target)) {
+    removeGestureListeners();
+    return;
+  }
+  if (musicReady && player.getPlayerState() !== YT.PlayerState.PLAYING) startMusic();
+  removeGestureListeners();
+}
+function removeGestureListeners() {
+  window.removeEventListener("pointerdown", startOnFirstGesture);
+  window.removeEventListener("keydown", startOnFirstGesture);
+}
+window.addEventListener("pointerdown", startOnFirstGesture);
+window.addEventListener("keydown", startOnFirstGesture);
+
 if (musicBtn) {
   musicBtn.addEventListener("click", () => {
     if (!player) return;
-    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-      player.pauseVideo();
-    } else {
-      player.unMute();
-      player.playVideo();
-    }
+    if (player.getPlayerState() === YT.PlayerState.PLAYING) player.pauseVideo();
+    else startMusic();
   });
 }
