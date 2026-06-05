@@ -1,12 +1,28 @@
-# Brainstorming / design working files (visual companion)
-.superpowers/
+# Local-only / personal (never published)
+local/
 
-# Playwright MCP scratch output
+# Tooling & scratch (not part of the portfolio)
+.claude/
+skills-lock.json
+.superpowers/
 .playwright-mcp/
 
-# Local-only assets (resume, etc.)
-local/
+# Stray screenshots in repo root (site images live in my-portfolio-front/)
+/*.png
+
+# Backend (Python)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.env
+
+# Node (if ever added to the front-end)
+node_modules/
 
 # OS / editor
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
