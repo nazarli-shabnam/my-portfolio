@@ -1,0 +1,12 @@
+# Brainstorming / design working files (visual companion)
+.superpowers/
+
+# Playwright MCP scratch output
+.playwright-mcp/
+
+# Local-only assets (resume, etc.)
+local/
+
+# OS / editor
+.DS_Store
+Thumbs.db
